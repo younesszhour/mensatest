@@ -11,7 +11,8 @@ def generate_image_with_text(text):
 def get_time():
     try:
         r = requests.get("http://worldtimeapi.org/api/timezone/Europe/Berlin")
-        dt = datetime.fromisoformat(r.json()['datetime'])
+        datetime_str = r.json()['datetime'].replace('Z', '+00:00')
+        dt = datetime.fromisoformat(datetime_str)
         return dt.strftime("%d.%m.%Y %H:%M")
     except Exception as e:
         print(f"API error: {e}")
