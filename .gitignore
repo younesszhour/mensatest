@@ -1,0 +1,6 @@
+# Generated image file
+time.png
+
+# Python cache
+__pycache__/
+*.pyc
