@@ -1,0 +1,27 @@
+
+name: Generate Current Time Image
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+jobs:
+  generate-time-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install Pillow requests
+      - name: Run image generation script
+        run: python generate_time_image.py
+      - name: Commit and Push new image
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add time.png
+          git commit -m "Update time.png" || echo "No changes"
+          git push
